@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by LW-PC on 2016/4/11.
  * shots RecyclerView 适配器
@@ -27,7 +29,6 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mContext = context;
         mShots = shots;
         mListener = listener;
-
     }
 
     @Override
@@ -40,22 +41,38 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
         final Shot image = mShots.get(position);
+
+        if (image.isAnimated()) {
+            Picasso.with(mContext)
+                    .load(R.drawable.animated)
+                    .into(itemViewHolder.animated);
+
+        } else {
+            itemViewHolder.animated.setVisibility(View.INVISIBLE);
+        }
         Picasso.with(mContext)
                 .load(image.getImages().getHidpi())
-                //.placeholder() 占位符
                 .into(itemViewHolder.shotImage);
-
+        Picasso.with(mContext)
+                .load(image.getUser().getAvatar_url())
+                .into(itemViewHolder.avatar);
 
     }
 
     private static class ItemViewHolder extends RecyclerView.ViewHolder {
-
+        //main image
         private ImageView shotImage;
+        //user avatar
+        private CircleImageView avatar;
+        //isGif
+        private ImageView animated;
+
         private ItemViewHolder(View itemView) {
             super(itemView);
             shotImage = (ImageView) itemView.findViewById(R.id.shotsImage);
+            avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
+            animated = (ImageView) itemView.findViewById(R.id.isGif);
         }
-
     }
 
     @Override

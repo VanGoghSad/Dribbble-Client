@@ -35,7 +35,7 @@ public class Shot {
 
     private int id;
     private String title;
-    private Object description;
+    private String description;
     private int width;
     private int height;
     /**
@@ -62,6 +62,7 @@ public class Shot {
     private String rebounds_url;
     private boolean animated;
     private List<String> tags;
+    private User user;
 
     public int getId() {
         return id;
@@ -79,11 +80,11 @@ public class Shot {
         this.title = title;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -275,5 +276,13 @@ public class Shot {
         public void setTeaser(String teaser) {
             this.teaser = teaser;
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

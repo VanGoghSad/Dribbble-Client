@@ -4,17 +4,20 @@ package com.example.lw_pc.tribblekill.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.adapter.ShotsAdapter;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,13 @@ import retrofit.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListFragment extends Fragment implements View.OnClickListener{
+public class ListFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
     private static final int SPAN_COUNT = 2;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private ShotsAdapter mShotsAdapter;
+    private AVLoadingIndicatorView avLoadingIndicatorView;
 
     public static Fragment newInstance() {
         return new ListFragment();
@@ -42,6 +47,8 @@ public class ListFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.ShotsRecyclerView);
+        avLoadingIndicatorView = (AVLoadingIndicatorView) v.findViewById(R.id.loading);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.srl_shots_list);
         return v;
     }
 
@@ -53,9 +60,11 @@ public class ListFragment extends Fragment implements View.OnClickListener{
     }
 
     private void init() {
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
         mShotsAdapter = new ShotsAdapter(getActivity(), new ArrayList<Shot>(), this);
         mRecyclerView.setAdapter(mShotsAdapter);
+        avLoadingIndicatorView.setVisibility(View.VISIBLE);
     }
 
     private void loadData() {
@@ -64,6 +73,7 @@ public class ListFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
                 mShotsAdapter.setShots(response.body());
+                avLoadingIndicatorView.setVisibility(View.GONE);
             }
 
             @Override
@@ -74,9 +84,23 @@ public class ListFragment extends Fragment implements View.OnClickListener{
     }
 
 
-
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData();
+        hideProgress();
+    }
+
+    public void hideProgress() {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 }

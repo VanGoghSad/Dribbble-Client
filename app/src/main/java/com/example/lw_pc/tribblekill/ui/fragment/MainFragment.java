@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ public class MainFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ViewPagerAdapter adapter;
+    private Toolbar mToolBar;
 
     private List<Fragment> list_fragment;
     private List<String> list_title;
@@ -35,7 +38,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.app_bar_main, container, false);
 
         initControls(view);
 
@@ -47,9 +50,12 @@ public class MainFragment extends Fragment {
      * @param view
      */
     private void initControls(View view) {
-
         mTabLayout = (TabLayout)view.findViewById(R.id.tabs);
         mViewPager = (ViewPager)view.findViewById(R.id.viewpager);
+        mToolBar = (Toolbar) view.findViewById(R.id.toolbar);
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(mToolBar);
 
         list_fragment = new ArrayList<>();
         list_fragment.add(new ListFragment());
