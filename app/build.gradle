@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.lw_pc.tribblekill"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -30,4 +30,10 @@ dependencies {
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nshmura:recyclertablayout:0.1.7'
+    compile 'com.android.support:cardview-v7:23.3.0'
+    //Progressbar
+    compile 'com.wang.avi:library:1.0.5'
+    compile 'com.nineoldandroids:library:2.4.0'
+    //CircleImageView
+    compile 'de.hdodenhof:circleimageview:2.0.0'
 }
