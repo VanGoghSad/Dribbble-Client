@@ -57,6 +57,7 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .load(image.getUser().getAvatar_url())
                 .into(itemViewHolder.avatar);
 
+        itemViewHolder.itemView.setOnClickListener(mListener);
     }
 
     private static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -83,5 +84,13 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void setShots(List<Shot> shots) {
         mShots = shots;
         notifyDataSetChanged();
+    }
+
+    public List<Shot> getShots() {
+        return mShots;
+    }
+
+    public Shot getItemData(int position) {
+        return getShots().get(position);
     }
 }

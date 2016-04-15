@@ -1,9 +1,11 @@
 package com.example.lw_pc.tribblekill.model;
 
+import java.io.Serializable;
+
 /**
  * Created by LW-PC on 2016/4/11.
  */
-public class User {
+public class User implements Serializable{
 
     /**
      * id : 32512
@@ -315,7 +317,7 @@ public class User {
         this.updated_at = updated_at;
     }
 
-    public static class LinksBean {
+    public static class LinksBean implements Serializable{
         private String web;
         private String twitter;
 

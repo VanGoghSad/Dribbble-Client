@@ -1,11 +1,12 @@
 package com.example.lw_pc.tribblekill.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by LW-PC on 2016/4/11.
  */
-public class Shot {
+public class Shot implements Serializable{
 
     /**
      * id : 2643991
@@ -248,7 +249,7 @@ public class Shot {
         this.tags = tags;
     }
 
-    public static class ImagesBean {
+    public static class ImagesBean implements Serializable{
         private String hidpi;
         private String normal;
         private String teaser;

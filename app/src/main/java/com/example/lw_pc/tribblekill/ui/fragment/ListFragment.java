@@ -16,6 +16,7 @@ import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Shot;
+import com.example.lw_pc.tribblekill.ui.activity.DetailActivity;
 import com.example.lw_pc.tribblekill.ui.adapter.ShotsAdapter;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -86,7 +87,11 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
 
     @Override
     public void onClick(View v) {
-
+        final int position = mRecyclerView.getChildAdapterPosition(v);
+        if (RecyclerView.NO_POSITION != position) {
+            Shot shot = mShotsAdapter.getItemData(position);
+            DetailActivity.start(getActivity(), shot);
+        }
     }
 
     @Override
