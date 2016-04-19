@@ -31,6 +31,7 @@ import retrofit.Retrofit;
  * A simple {@link Fragment} subclass.
  */
 public class ListFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+    private boolean isVisible;
     private static final int SPAN_COUNT = 2;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -57,7 +58,6 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        loadData();
     }
 
     private void init() {
@@ -85,6 +85,31 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
     }
 
 
+    /**
+     * 仅当Fragment可见时加载数据
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            showData();
+        }
+    }
+
+    private void showData() {
+        if(isVisible) {
+            isVisible = false;
+            loadData();
+        }
+    }
+
+    /**
+     * item点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         final int position = mRecyclerView.getChildAdapterPosition(v);
@@ -94,6 +119,9 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
         }
     }
 
+    /**
+     * 页面刷新事件
+     */
     @Override
     public void onRefresh() {
         loadData();

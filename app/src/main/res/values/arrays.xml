@@ -2,8 +2,6 @@
 <resources>
     <string-array name = "tabLayout_item">
         <item>Popular</item>
-        <item>Recent</item>
-        <item>Teams</item>
-        <item>Debuts</item>
+        <item>Following</item>
     </string-array>
 </resources>

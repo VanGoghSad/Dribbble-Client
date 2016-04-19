@@ -60,8 +60,6 @@ public class MainFragment extends Fragment {
         list_fragment = new ArrayList<>();
         list_fragment.add(new ListFragment());
         list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
 
         list_title = new ArrayList<>();
         String[] tabTitle = getResources().getStringArray(R.array.tabLayout_item);

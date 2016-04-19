@@ -53,9 +53,6 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Picasso.with(mContext)
                 .load(image.getImages().getHidpi())
                 .into(itemViewHolder.shotImage);
-        Picasso.with(mContext)
-                .load(image.getUser().getAvatar_url())
-                .into(itemViewHolder.avatar);
 
         itemViewHolder.itemView.setOnClickListener(mListener);
     }
