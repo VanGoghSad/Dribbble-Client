@@ -3,6 +3,8 @@ package com.example.lw_pc.tribblekill.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +16,8 @@ import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.fragment.DetailsFragment;
 
-public class DetailActivity extends AppCompatActivity {
 
+public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,9 @@ public class DetailActivity extends AppCompatActivity {
 
         Shot shot = (Shot) getIntent().getSerializableExtra(DetailsFragment.SHOT);
         getSupportFragmentManager().beginTransaction().add(R.id.container, DetailsFragment.newInstance(shot)).commit();
+
+
+
 
     }
 
@@ -43,4 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottomBar_likes"
+        android:icon="@drawable/like_m"
+        android:checked="false"
+
+        android:title="Like"/>
+    <item
+        android:id="@+id/bottomBar_comments"
+        android:icon="@drawable/comments"
+        android:title="Comment"/>
+    <item
+        android:id="@+id/bottomBar_bucket"
+        android:icon="@drawable/views"
+        android:title="Bucket"/>
+
+</menu>
