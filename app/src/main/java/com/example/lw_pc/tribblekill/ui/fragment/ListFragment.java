@@ -75,6 +75,7 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
             public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
                 mShotsAdapter.setShots(response.body());
                 avLoadingIndicatorView.setVisibility(View.GONE);
+                response.code();
             }
 
             @Override
@@ -82,6 +83,7 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
 
             }
         });
+
     }
 
 

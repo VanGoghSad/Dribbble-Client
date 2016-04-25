@@ -22,6 +22,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    //Progressbar
+    //CircleImageView
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -31,9 +33,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nshmura:recyclertablayout:0.1.7'
     compile 'com.android.support:cardview-v7:23.3.0'
-    //Progressbar
     compile 'com.wang.avi:library:1.0.5'
     compile 'com.nineoldandroids:library:2.4.0'
-    //CircleImageView
     compile 'de.hdodenhof:circleimageview:2.0.0'
 }

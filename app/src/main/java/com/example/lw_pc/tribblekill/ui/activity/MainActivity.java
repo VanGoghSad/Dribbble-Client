@@ -1,5 +1,7 @@
 package com.example.lw_pc.tribblekill.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.ui.adapter.ViewPagerAdapter;
@@ -30,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private SearchView searchView;
+    private NavigationView mNavigationView;
+
+    private ImageView mAvatar;
+
 
     private List<Fragment> list_fragment;
     private List<String> list_title;
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         searchView = (SearchView) findViewById(R.id.action_search);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolBar);
 
@@ -53,6 +62,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         toggle.syncState();
 
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = mNavigationView.inflateHeaderView(R.layout.nav_header_main);
+        mAvatar = (ImageView) headerView.findViewById(R.id.imageView);
+        mAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingActivity.start(MainActivity.this);
+            }
+        });
         loadData();
     }
 
@@ -111,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -121,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.imageView) {
 
         }
 

@@ -21,8 +21,6 @@ import android.widget.TextView;
 
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.model.Shot;
-
-import com.melnykov.fab.ObservableScrollView;
 import com.squareup.picasso.Picasso;
 
 
@@ -60,7 +58,6 @@ public class DetailsFragment extends Fragment {
     private TextView iconComment;
     private TextView iconBucket;
     private TextView iconAttachment;
-
 
     private Shot shot;
 
@@ -139,7 +136,9 @@ public class DetailsFragment extends Fragment {
         comments.setText(getContext().getString(R.string.comments, shot.getComments_count()));
         buckets.setText(getContext().getString(R.string.buckets, shot.getBuckets_count()));
         attachments.setText(getContext().getString(R.string.attachments, shot.getAttachments_count()));
-        mDescription.setText(Html.fromHtml(shot.getDescription()));
+        if (shot.getDescription() != null) {
+            mDescription.setText(Html.fromHtml(shot.getDescription()));
+        }
         mDescription.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
