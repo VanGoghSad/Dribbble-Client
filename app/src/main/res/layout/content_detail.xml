@@ -47,39 +47,20 @@
                     android:textSize="20sp"
                      />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#bfbfbf"/>
 
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="#bfbfbf"/>
 
-                    <com.example.lw_pc.tribblekill.util.MyTextView
-                        android:id="@+id/icon_views"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:customFont="@string/myFont"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"/>
 
-                    <TextView
-                        android:id="@+id/views_count"
-                        android:layout_marginStart="6dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/myNum"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/shot_title"
@@ -98,7 +79,7 @@
             android:padding="@dimen/activity_vertical_margin">
 
             <LinearLayout
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:gravity="center"
@@ -109,6 +90,7 @@
                     android:id="@+id/icon_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     app:customFont="@string/myFont" />
 
                 <TextView
@@ -119,7 +101,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/border"
@@ -128,20 +110,21 @@
                 android:padding="6dp">
 
                 <com.example.lw_pc.tribblekill.util.MyTextView
-                    android:id="@+id/icon_comment"
+                    android:id="@+id/icon_views"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     app:customFont="@string/myFont" />
 
                 <TextView
-                    android:id="@+id/count_comment"
+                    android:id="@+id/views_count"
                     style="@style/MyCountsText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/border"
@@ -153,19 +136,18 @@
                     android:id="@+id/icon_bucket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
+                    android:textSize="20sp"
                     app:customFont="@string/myFont" />
 
                 <TextView
                     android:id="@+id/count_bucket"
                     style="@style/MyCountsText"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/border"
@@ -177,6 +159,7 @@
                     android:id="@+id/icon_attachment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     app:customFont="@string/myFont" />
 
                 <TextView
@@ -197,6 +180,37 @@
             android:paddingEnd="16dp"
             android:textColorLink="@color/link_color"
             android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/myNum"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/response_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/more"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
 
 
     </LinearLayout>

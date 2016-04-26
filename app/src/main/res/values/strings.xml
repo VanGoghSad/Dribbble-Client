@@ -19,13 +19,18 @@
     <string name="attachments">"%d"</string>
     <string name="created_time">" on %s"</string>
 
+
     <string name="icon_like">"favorite"</string>
+    <string name="icon_like_border">"favorite_border"</string>
     <string name="icon_comment">"chat"</string>
-    <string name="icon_bucket">"favorite"</string>
+    <string name="icon_bucket">"local_drink"</string>
     <string name="icon_attachment">"attachment"</string>
     <string name="icon_view">"visibility"</string>
 
     <string name="myFont">"MaterialIcons-Regular.ttf"</string>
+
+    <string name="response">"%d Responses"</string>
+    <string name="more">more</string>
 
 
 </resources>

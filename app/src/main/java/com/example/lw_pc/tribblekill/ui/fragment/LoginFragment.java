@@ -66,13 +66,11 @@ public class LoginFragment extends Fragment {
                 System.out.println(url);
                 if(url.contains("code")) {
                     code = url.substring(url.indexOf("=")+1, url.length());
-                    System.out.println(code);
-
                     Api api = DribbbleApi.getDribbbleApi();
                     api.getToken(DribbbleApi.CLIENT_ID, DribbbleApi.CLIENT_SECRET, code).enqueue(new Callback<Token>() {
                         @Override
                         public void onResponse(Response<Token> response, Retrofit retrofit) {
-
+                            //access_token
                         }
 
                         @Override

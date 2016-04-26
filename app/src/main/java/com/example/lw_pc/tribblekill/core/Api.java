@@ -2,6 +2,7 @@ package com.example.lw_pc.tribblekill.core;
 
 import android.webkit.WebView;
 
+import com.example.lw_pc.tribblekill.model.Comment;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.model.Token;
 
@@ -23,6 +24,9 @@ import retrofit.http.Query;
 public interface Api {
     @GET(DribbbleApi.Shots)
     Call<List<Shot>> getShots();
+
+    @GET(DribbbleApi.COMMENTS_URL)
+    Call<List<Comment>> getComments(@Path("id") int Id);
 
     @FormUrlEncoded
     @POST(DribbbleApi.OAuth_ACCESS_TOKEN)
