@@ -1,6 +1,7 @@
 package com.example.lw_pc.tribblekill.ui.fragment;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.lw_pc.tribblekill.App;
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
@@ -26,6 +28,8 @@ import retrofit.Retrofit;
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment {
+    private App app;
+
     public String code;
 
     private WebView mWebView;
@@ -70,7 +74,12 @@ public class LoginFragment extends Fragment {
                     api.getToken(DribbbleApi.CLIENT_ID, DribbbleApi.CLIENT_SECRET, code).enqueue(new Callback<Token>() {
                         @Override
                         public void onResponse(Response<Token> response, Retrofit retrofit) {
-                            //access_token
+                            app = (App) getActivity().getApplication();
+                            SharedPreferences.Editor editor = app.sharedPreferences.edit();
+                            editor.putString("access_token", response.body().getAccess_token());
+                            editor.commit();
+
+
                         }
 
                         @Override

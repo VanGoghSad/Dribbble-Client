@@ -33,6 +33,8 @@ import retrofit.Retrofit;
 public class ListFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
     private boolean isVisible;
     private static final int SPAN_COUNT = 2;
+    private int page = 1;
+    private int[] lastVisibleItem;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -62,20 +64,52 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
 
     private void init() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
+        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mShotsAdapter = new ShotsAdapter(getActivity(), new ArrayList<Shot>(), this);
         mRecyclerView.setAdapter(mShotsAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem[1] + 1 == mShotsAdapter.getItemCount()) {
+                    loadMore();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
+            }
+        });
         avLoadingIndicatorView.setVisibility(View.VISIBLE);
     }
 
     private void loadData() {
         Api api = DribbbleApi.getDribbbleApi();
-        api.getShots().enqueue(new Callback<List<Shot>>() {
+        api.getShots(1).enqueue(new Callback<List<Shot>>() {
             @Override
             public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
                 mShotsAdapter.setShots(response.body());
                 avLoadingIndicatorView.setVisibility(View.GONE);
-                response.code();
+                //System.out.println(response.headers().get("Link"));
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void loadMore() {
+        Api api = DribbbleApi.getDribbbleApi();
+        api.getShots(++page).enqueue(new Callback<List<Shot>>() {
+            @Override
+            public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
+                mShotsAdapter.addShots(response.body());
             }
 
             @Override
@@ -126,16 +160,10 @@ public class ListFragment extends Fragment implements View.OnClickListener, Swip
      */
     @Override
     public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
         loadData();
-        hideProgress();
+        page = 1;
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public void hideProgress() {
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
 }

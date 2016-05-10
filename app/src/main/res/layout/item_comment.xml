@@ -51,6 +51,7 @@
                 android:textSize="20sp"
                 app:customFont="@string/myFont"
                 android:layout_toStartOf="@+id/like_count"
+                android:clickable="true"
                 />
 
             <TextView

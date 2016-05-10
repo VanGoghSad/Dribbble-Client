@@ -21,13 +21,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lw_pc.tribblekill.App;
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Comment;
+import com.example.lw_pc.tribblekill.model.Like;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.adapter.CommentsAdapter;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 
@@ -49,8 +52,9 @@ import static com.example.lw_pc.tribblekill.R.id.shot_title;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailsFragment extends Fragment implements View.OnClickListener {
+public class DetailsFragment extends Fragment {
     public static final String SHOT = "shot";
+    private App app;
 
     private RecyclerView mRcv_comments;
     private Toolbar mToolbar;
@@ -75,6 +79,10 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
     private Shot shot;
     private CommentsAdapter mCommentsAdapter;
+    private String token;
+    private int position;
+    private Comment comment;
+
 
 
     public static Fragment newInstance(Shot shot) {
@@ -110,13 +118,18 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
         iconBucket = (TextView) v.findViewById(R.id.icon_bucket);
         iconAttachment = (TextView) v.findViewById(R.id.icon_attachment);
 
+        shot = (Shot) getArguments().getSerializable(SHOT);
+
+        app = (App) getActivity().getApplication();
+        token = app.sharedPreferences.getString("access_token", "");
+
         return v;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        shot = (Shot) getArguments().getSerializable(SHOT);
+
         init();
         rcvInit();
     }
@@ -129,6 +142,8 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
             // 给左上角图标的左边加上一个返回的图标
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
 
         Picasso.with(getActivity())
                 .load(shot.getImages().getHidpi())
@@ -172,15 +187,15 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
         mRcv_comments.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRcv_comments.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
-        mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>(), this);
+        mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>(), shot, token);
         mRcv_comments.setAdapter(mCommentsAdapter);
+
 
         Api api = DribbbleApi.getDribbbleApi();
         api.getComments(shot.getId()).enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Response<List<Comment>> response, Retrofit retrofit) {
                 mCommentsAdapter.setComments(response.body());
-
             }
 
             @Override
@@ -209,12 +224,5 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    /**
-     * Comment item 点击事件
-     * @param v
-     */
-    @Override
-    public void onClick(View v) {
 
-    }
 }
