@@ -34,7 +34,6 @@ public interface Api {
     @POST(DribbbleApi.OAuth_ACCESS_TOKEN)
     Call<Token> getToken(@Field("client_id") String id, @Field("client_secret")  String secret, @Field("code")  String code);
 
-
     @POST(DribbbleApi.LIKE_COMMENT_URL)
     Call<Like> likeComment(@Path("shot") int shotId, @Path("id") int Id, @Query("access_token") String token);
 
@@ -46,4 +45,10 @@ public interface Api {
 
     @POST(DribbbleApi.LIKE_SHOT_URL)
     Call<Like> likeShot(@Path("id") int shotId, @Query("access_token") String token);
+
+    @DELETE(DribbbleApi.LIKE_SHOT_URL)
+    Call<Like> unlikeShot(@Path("id") int shotId, @Query("access_token") String token);
+
+    @GET(DribbbleApi.LIKE_SHOT_URL)
+    Call<Like> isLikeShot(@Path("id") int shotId, @Query("access_token") String token);
 }

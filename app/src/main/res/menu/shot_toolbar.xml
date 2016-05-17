@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/like"
-        android:icon="@drawable/like_m"
-        android:title="like"
-        app:showAsAction="ifRoom" />
+        app:actionLayout="@layout/item_actionbar"
+        app:showAsAction="ifRoom"
+        android:title="@string/icon_attachment"/>
+    <item
+        android:id="@+id/action_settings"
+        app:showAsAction="never"
+        android:title="setting"/>
+
+
+
+
+
 
 
 </menu>

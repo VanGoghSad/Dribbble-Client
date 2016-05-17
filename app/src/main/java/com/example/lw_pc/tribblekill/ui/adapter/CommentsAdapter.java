@@ -97,19 +97,21 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mComment = mComments.get(position);
 
         Api api = DribbbleApi.getDribbbleApi();
-        api.isLikeComment(mShot.getId(), mComment.getId(), mToken).enqueue(new Callback<Like>() {
-            @Override
-            public void onResponse(Response<Like> response, Retrofit retrofit) {
-                if (response.body() != null) {
-                    itemViewHolder.iconLike.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+        if (mComment.getLikes_count() != 0) {
+            api.isLikeComment(mShot.getId(), mComment.getId(), mToken).enqueue(new Callback<Like>() {
+                @Override
+                public void onResponse(Response<Like> response, Retrofit retrofit) {
+                    if (response.body() != null) {
+                        itemViewHolder.iconLike.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
+                @Override
+                public void onFailure(Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
 
         Picasso.with(mContext)
                 .load(mComment.getUser().getAvatar_url())
@@ -121,7 +123,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         itemViewHolder.iconLike.setText(R.string.icon_like_border);
         itemViewHolder.mLikeCount.setText(mContext.getString(R.string.likes, mComment.getLikes_count()));
 
-        itemViewHolder.bind(mShot.getId(), mComment.getId(), mToken, mComment);
+        itemViewHolder.bind(mShot.getId(), mComment.getId(), mToken);
 
 
 
@@ -131,7 +133,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private int mShotId;
         private int mCommentId;
         private String mToken;
-        private Comment mComment;
 
         private CircleImageView mAvatar;
         private MyTextView iconLike;
@@ -154,11 +155,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         }
 
-        public void bind(int shotId, int commentId, String token, Comment comment) {
+        public void bind(int shotId, int commentId, String token) {
             mShotId = shotId;
             mCommentId = commentId;
             mToken = token;
-            mComment = comment;
         }
 
 
