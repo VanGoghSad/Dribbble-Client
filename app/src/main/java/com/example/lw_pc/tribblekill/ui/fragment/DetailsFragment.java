@@ -28,6 +28,7 @@ import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Comment;
 import com.example.lw_pc.tribblekill.model.Like;
 import com.example.lw_pc.tribblekill.model.Shot;
+import com.example.lw_pc.tribblekill.ui.activity.PersonalPageActivity;
 import com.example.lw_pc.tribblekill.ui.adapter.CommentsAdapter;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -52,7 +53,7 @@ import static com.example.lw_pc.tribblekill.R.id.shot_title;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends Fragment implements View.OnClickListener{
     public static final String SHOT = "shot";
     private App app;
 
@@ -178,6 +179,8 @@ public class DetailsFragment extends Fragment {
         mDescription.setMovementMethod(LinkMovementMethod.getInstance());
 
 
+        mAvatar.setOnClickListener(this);
+        mAuthor.setOnClickListener(this);
 
     }
 
@@ -224,5 +227,14 @@ public class DetailsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.avatar:
+            case R.id.user:
+                PersonalPageActivity.start(getActivity(), shot);
+                break;
+        }
 
+    }
 }
