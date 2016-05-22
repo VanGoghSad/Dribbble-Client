@@ -4,4 +4,9 @@
         <item>Popular</item>
         <item>Following</item>
     </string-array>
+    <string-array name = "tabLayout_item_person_page">
+        <item>Shots</item>
+        <item>Followers</item>
+    </string-array>
+
 </resources>

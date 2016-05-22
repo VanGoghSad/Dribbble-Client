@@ -32,7 +32,9 @@ import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.adapter.ViewPagerAdapter;
 import com.example.lw_pc.tribblekill.ui.fragment.DetailsFragment;
+import com.example.lw_pc.tribblekill.ui.fragment.FollowersFragment;
 import com.example.lw_pc.tribblekill.ui.fragment.ListFragment;
+import com.example.lw_pc.tribblekill.ui.fragment.PersonalShotsFragment;
 import com.example.lw_pc.tribblekill.util.FastBlur;
 import com.squareup.picasso.Picasso;
 
@@ -51,8 +53,7 @@ public class PersonalPageActivity extends AppCompatActivity {
     private CircleImageView mAvatar;
     private TextView mUsername;
     private TextView mBio;
-    private ImageView mBackgorund;
-    private ImageView mBackgroundSource;
+    private ImageView mBackground;
     private AppBarLayout mAppBar;
 
 
@@ -76,12 +77,8 @@ public class PersonalPageActivity extends AppCompatActivity {
         mAvatar = (CircleImageView) findViewById(R.id.avatar);
         mUsername = (TextView) findViewById(R.id.username);
         mBio = (TextView) findViewById(R.id.bio);
-        mBackgorund = (ImageView) findViewById(R.id.background);
+        mBackground = (ImageView) findViewById(R.id.background);
 
-        /*Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.white));*/
         init();
     }
 
@@ -116,15 +113,17 @@ public class PersonalPageActivity extends AppCompatActivity {
         });
 
         list_fragment = new ArrayList<>();
-        list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
+        list_fragment.add(PersonalShotsFragment.newInstance(shot));
+        list_fragment.add(FollowersFragment.newInstance(shot));
 
         list_title = new ArrayList<>();
-        String[] tabTitle = getResources().getStringArray(R.array.tabLayout_item);
+        /*String[] tabTitle = getResources().getStringArray(R.array.tabLayout_item_person_page);
         for (String s : tabTitle) {
             list_title.add(s);
-        }
+        }*/
+
+        list_title.add(getString(R.string.shots, shot.getUser().getShots_count()));
+        list_title.add(getString(R.string.followers, shot.getUser().getFollowers_count()));
 
         adapter = new ViewPagerAdapter(this.getSupportFragmentManager(), list_fragment, list_title);
         mViewPager.setAdapter(adapter);
@@ -138,7 +137,7 @@ public class PersonalPageActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    private void applyBlur() {
+   /* private void applyBlur() {
         mBackgroundSource.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -151,7 +150,7 @@ public class PersonalPageActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
+    }*/
 
     private void blur(Bitmap bkg, View view) {
         long startMs = System.currentTimeMillis();

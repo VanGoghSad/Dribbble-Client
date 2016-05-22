@@ -3,42 +3,42 @@ package com.example.lw_pc.tribblekill.model;
 import java.io.Serializable;
 
 /**
- * Created by LW-PC on 2016/4/11.
+ * Created by LW-PC on 2016/5/22.
  */
-public class User implements Serializable {
+public class Team implements Serializable{
 
     /**
-     * id : 32512
-     * name : Gleb Kuznetsov✈
-     * username : glebich
-     * html_url : https://dribbble.com/glebich
-     * avatar_url : https://d13yacurqjgara.cloudfront.net/users/32512/avatars/normal/e75a0d1f71109c522f7c65083124880e.png?1454461319
-     * bio : Product designer / Design director. Web, Smart-TV, iOS, Android, Mac OS &amp; Ecosystems.
-     Contacts: g.kuznetsov@me.com
-     * location : San Francisco, California
-     * links : {"web":"http://linkedin.com/in/glebich","twitter":"https://twitter.com/glebich"}
-     * buckets_count : 10
-     * comments_received_count : 1234
-     * followers_count : 9609
-     * followings_count : 316
-     * likes_count : 482
-     * likes_received_count : 41701
-     * projects_count : 16
-     * rebounds_received_count : 15
-     * shots_count : 119
-     * teams_count : 2
+     * id : 1331
+     * name : FΛNTΛSY
+     * username : Fantasy
+     * html_url : https://dribbble.com/Fantasy
+     * avatar_url : https://d13yacurqjgara.cloudfront.net/users/1331/avatars/normal/4342af710a5562a5ebab677e2ee57833.png?1399489342
+     * bio : A design &amp; UX incubator. Product, App, Web UX / UI since 1999. Offices in San Francisco and New York City.
+     * location : San Francisco, CA
+     * links : {"web":"http://www.fantasy.co","twitter":"https://twitter.com/f_i"}
+     * buckets_count : 0
+     * comments_received_count : 455
+     * followers_count : 11297
+     * followings_count : 98
+     * likes_count : 121
+     * likes_received_count : 14427
+     * projects_count : 0
+     * rebounds_received_count : 1
+     * shots_count : 43
      * can_upload_shot : true
-     * type : Player
-     * pro : true
-     * buckets_url : https://api.dribbble.com/v1/users/32512/buckets
-     * followers_url : https://api.dribbble.com/v1/users/32512/followers
-     * following_url : https://api.dribbble.com/v1/users/32512/following
-     * likes_url : https://api.dribbble.com/v1/users/32512/likes
-     * projects_url : https://api.dribbble.com/v1/users/32512/projects
-     * shots_url : https://api.dribbble.com/v1/users/32512/shots
-     * teams_url : https://api.dribbble.com/v1/users/32512/teams
-     * created_at : 2011-05-04T12:41:10Z
-     * updated_at : 2016-04-11T03:50:17Z
+     * type : Team
+     * pro : false
+     * buckets_url : https://api.dribbble.com/v1/users/1331/buckets
+     * followers_url : https://api.dribbble.com/v1/users/1331/followers
+     * following_url : https://api.dribbble.com/v1/users/1331/following
+     * likes_url : https://api.dribbble.com/v1/users/1331/likes
+     * projects_url : https://api.dribbble.com/v1/users/1331/projects
+     * shots_url : https://api.dribbble.com/v1/users/1331/shots
+     * created_at : 2010-03-18T21:52:30Z
+     * updated_at : 2016-05-22T04:48:22Z
+     * members_count : 12
+     * members_url : https://api.dribbble.com/v1/teams/1331/members
+     * team_shots_url : https://api.dribbble.com/v1/teams/1331/shots
      */
 
     private int id;
@@ -49,8 +49,8 @@ public class User implements Serializable {
     private String bio;
     private String location;
     /**
-     * web : http://linkedin.com/in/glebich
-     * twitter : https://twitter.com/glebich
+     * web : http://www.fantasy.co
+     * twitter : https://twitter.com/f_i
      */
 
     private LinksBean links;
@@ -63,7 +63,6 @@ public class User implements Serializable {
     private int projects_count;
     private int rebounds_received_count;
     private int shots_count;
-    private int teams_count;
     private boolean can_upload_shot;
     private String type;
     private boolean pro;
@@ -73,9 +72,11 @@ public class User implements Serializable {
     private String likes_url;
     private String projects_url;
     private String shots_url;
-    private String teams_url;
     private String created_at;
     private String updated_at;
+    private int members_count;
+    private String members_url;
+    private String team_shots_url;
 
     public int getId() {
         return id;
@@ -213,14 +214,6 @@ public class User implements Serializable {
         this.shots_count = shots_count;
     }
 
-    public int getTeams_count() {
-        return teams_count;
-    }
-
-    public void setTeams_count(int teams_count) {
-        this.teams_count = teams_count;
-    }
-
     public boolean isCan_upload_shot() {
         return can_upload_shot;
     }
@@ -293,14 +286,6 @@ public class User implements Serializable {
         this.shots_url = shots_url;
     }
 
-    public String getTeams_url() {
-        return teams_url;
-    }
-
-    public void setTeams_url(String teams_url) {
-        this.teams_url = teams_url;
-    }
-
     public String getCreated_at() {
         return created_at;
     }
@@ -315,6 +300,30 @@ public class User implements Serializable {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getMembers_count() {
+        return members_count;
+    }
+
+    public void setMembers_count(int members_count) {
+        this.members_count = members_count;
+    }
+
+    public String getMembers_url() {
+        return members_url;
+    }
+
+    public void setMembers_url(String members_url) {
+        this.members_url = members_url;
+    }
+
+    public String getTeam_shots_url() {
+        return team_shots_url;
+    }
+
+    public void setTeam_shots_url(String team_shots_url) {
+        this.team_shots_url = team_shots_url;
     }
 
     public static class LinksBean implements Serializable{

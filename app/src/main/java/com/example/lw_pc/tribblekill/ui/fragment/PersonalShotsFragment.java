@@ -4,13 +4,11 @@ package com.example.lw_pc.tribblekill.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
@@ -18,7 +16,6 @@ import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.activity.DetailActivity;
 import com.example.lw_pc.tribblekill.ui.adapter.ShotsAdapter;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,29 +27,35 @@ import retrofit.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListFragment extends Fragment implements View.OnClickListener {
-    private boolean isVisible;
+public class PersonalShotsFragment extends Fragment implements View.OnClickListener{
     private static final int SPAN_COUNT = 2;
     private int page = 1;
     private int[] lastVisibleItem;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private ShotsAdapter mShotsAdapter;
-    private AVLoadingIndicatorView avLoadingIndicatorView;
+    private Shot shot;
 
-    public static Fragment newInstance() {
-        return new ListFragment();
+
+
+
+    public static Fragment newInstance(Shot shot) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetailsFragment.SHOT, shot);
+        Fragment fragment = new PersonalShotsFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_personal_shots, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.ShotsRecyclerView);
-        avLoadingIndicatorView = (AVLoadingIndicatorView) v.findViewById(R.id.loading);
-        //mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.srl_shots_list);
+        shot = (Shot) getArguments().getSerializable(DetailsFragment.SHOT);
+
         return v;
     }
 
@@ -60,10 +63,10 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        loadData();
     }
 
     private void init() {
-        //mSwipeRefreshLayout.setOnRefreshListener(this);
         final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mShotsAdapter = new ShotsAdapter(getActivity(), new ArrayList<Shot>(), this);
@@ -85,87 +88,75 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                 lastVisibleItem = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
             }
         });
-        avLoadingIndicatorView.setVisibility(View.VISIBLE);
     }
 
     private void loadData() {
         Api api = DribbbleApi.getDribbbleApi();
-        api.getShots(1).enqueue(new Callback<List<Shot>>() {
-            @Override
-            public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
-                mShotsAdapter.setShots(response.body());
-                avLoadingIndicatorView.setVisibility(View.GONE);
-                //System.out.println(response.headers().get("Link"));
-            }
+        if (shot.getUser().getType().equals("Team")) {
+            api.getTeamShots(shot.getUser().getId(), page).enqueue(new Callback<List<Shot>>() {
+                @Override
+                public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
+                    mShotsAdapter.setShots(response.body());
+                }
 
-            @Override
-            public void onFailure(Throwable t) {
+                @Override
+                public void onFailure(Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else if (shot.getUser().getType().equals("Player")) {
+            api.getPersonalShots(shot.getUser().getId(), page).enqueue(new Callback<List<Shot>>() {
+                @Override
+                public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
+                    mShotsAdapter.setShots(response.body());
+                }
 
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+        }
     }
+
 
     private void loadMore() {
         Api api = DribbbleApi.getDribbbleApi();
-        api.getShots(++page).enqueue(new Callback<List<Shot>>() {
-            @Override
-            public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
-                mShotsAdapter.addShots(response.body());
-            }
+        if (shot.getUser().getType().equals("Team")) {
+            api.getTeamShots(shot.getUser().getId(), ++page).enqueue(new Callback<List<Shot>>() {
+                @Override
+                public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
+                    mShotsAdapter.addShots(response.body());
+                }
 
-            @Override
-            public void onFailure(Throwable t) {
+                @Override
+                public void onFailure(Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else if (shot.getUser().getType().equals("Player")) {
+            api.getPersonalShots(shot.getUser().getId(), ++page).enqueue(new Callback<List<Shot>>() {
+                @Override
+                public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
+                    mShotsAdapter.addShots(response.body());
+                }
 
-    }
+                @Override
+                public void onFailure(Throwable t) {
 
-
-    /**
-     * 仅当Fragment可见时加载数据
-     * @param isVisibleToUser
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if(getUserVisibleHint()) {
-            isVisible = true;
-            showData();
+                }
+            });
         }
+
     }
 
-    private void showData() {
-        if(isVisible) {
-            isVisible = false;
-            loadData();
-        }
-    }
 
-    /**
-     * item点击事件
-     * @param v
-     */
     @Override
     public void onClick(View v) {
         final int position = mRecyclerView.getChildAdapterPosition(v);
         if (RecyclerView.NO_POSITION != position) {
-            Shot shot = mShotsAdapter.getItemData(position);
-            DetailActivity.start(getActivity(), shot);
+            Shot shot_1 = mShotsAdapter.getItemData(position);
+            DetailActivity.start(getActivity(), shot_1);
         }
     }
-
-   /* *//**
-     * 页面刷新事件
-     *//*
-    @Override
-    public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        loadData();
-        page = 1;
-        mSwipeRefreshLayout.setRefreshing(false);
-    }*/
-
 }

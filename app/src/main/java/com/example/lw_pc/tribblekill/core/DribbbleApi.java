@@ -2,6 +2,7 @@ package com.example.lw_pc.tribblekill.core;
 
 import android.util.Pair;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -21,6 +22,9 @@ public class DribbbleApi {
     public static final String COMMENTS_URL = BASE_URL + "shots/{id}/comments" + _ACCESS_TOKEN;
     public static final String LIKE_COMMENT_URL = BASE_URL + "shots/{shot}/comments/{id}/like";
     public static final String LIKE_SHOT_URL = BASE_URL + "shots/{id}/like";
+    public static final String Personal_Shots = BASE_URL + "users/{id}/shots" + _ACCESS_TOKEN;
+    public static final String Team_Shots = BASE_URL + "teams/{id}/shots" + _ACCESS_TOKEN;
+    public static final String Followers = BASE_URL + "users/{id}/followers" + _ACCESS_TOKEN;
 
     private Retrofit retrofit;
     private static DribbbleApi instance = new DribbbleApi();

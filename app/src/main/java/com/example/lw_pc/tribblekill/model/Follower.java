@@ -3,42 +3,41 @@ package com.example.lw_pc.tribblekill.model;
 import java.io.Serializable;
 
 /**
- * Created by LW-PC on 2016/4/11.
+ * Created by LW-PC on 2016/5/22.
  */
-public class User implements Serializable {
+public class Follower implements Serializable {
 
     /**
-     * id : 32512
-     * name : Gleb Kuznetsov✈
-     * username : glebich
-     * html_url : https://dribbble.com/glebich
-     * avatar_url : https://d13yacurqjgara.cloudfront.net/users/32512/avatars/normal/e75a0d1f71109c522f7c65083124880e.png?1454461319
-     * bio : Product designer / Design director. Web, Smart-TV, iOS, Android, Mac OS &amp; Ecosystems.
-     Contacts: g.kuznetsov@me.com
-     * location : San Francisco, California
-     * links : {"web":"http://linkedin.com/in/glebich","twitter":"https://twitter.com/glebich"}
-     * buckets_count : 10
-     * comments_received_count : 1234
-     * followers_count : 9609
-     * followings_count : 316
-     * likes_count : 482
-     * likes_received_count : 41701
-     * projects_count : 16
-     * rebounds_received_count : 15
-     * shots_count : 119
-     * teams_count : 2
+     * id : 185523
+     * name : Alex Dixon
+     * username : alexdixonco
+     * html_url : https://dribbble.com/alexdixonco
+     * avatar_url : https://d13yacurqjgara.cloudfront.net/users/185523/avatars/normal/69c17bf8b5aaf9546dbbfd2b276adc4f.png?1461749224
+     * bio : Designer and coder fuelled on cake and caffeine — proudly part of the Zengenti troop!
+     * location : Ludlow, Shropshire, England
+     * links : {"twitter":"https://twitter.com/alexdixonco"}
+     * buckets_count : 4
+     * comments_received_count : 18
+     * followers_count : 104
+     * followings_count : 826
+     * likes_count : 319
+     * likes_received_count : 242
+     * projects_count : 0
+     * rebounds_received_count : 0
+     * shots_count : 12
+     * teams_count : 0
      * can_upload_shot : true
      * type : Player
      * pro : true
-     * buckets_url : https://api.dribbble.com/v1/users/32512/buckets
-     * followers_url : https://api.dribbble.com/v1/users/32512/followers
-     * following_url : https://api.dribbble.com/v1/users/32512/following
-     * likes_url : https://api.dribbble.com/v1/users/32512/likes
-     * projects_url : https://api.dribbble.com/v1/users/32512/projects
-     * shots_url : https://api.dribbble.com/v1/users/32512/shots
-     * teams_url : https://api.dribbble.com/v1/users/32512/teams
-     * created_at : 2011-05-04T12:41:10Z
-     * updated_at : 2016-04-11T03:50:17Z
+     * buckets_url : https://api.dribbble.com/v1/users/185523/buckets
+     * followers_url : https://api.dribbble.com/v1/users/185523/followers
+     * following_url : https://api.dribbble.com/v1/users/185523/following
+     * likes_url : https://api.dribbble.com/v1/users/185523/likes
+     * projects_url : https://api.dribbble.com/v1/users/185523/projects
+     * shots_url : https://api.dribbble.com/v1/users/185523/shots
+     * teams_url : https://api.dribbble.com/v1/users/185523/teams
+     * created_at : 2012-08-02T11:54:55Z
+     * updated_at : 2016-05-19T05:55:46Z
      */
 
     private int id;
@@ -49,8 +48,7 @@ public class User implements Serializable {
     private String bio;
     private String location;
     /**
-     * web : http://linkedin.com/in/glebich
-     * twitter : https://twitter.com/glebich
+     * twitter : https://twitter.com/alexdixonco
      */
 
     private LinksBean links;
@@ -317,17 +315,8 @@ public class User implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public static class LinksBean implements Serializable{
-        private String web;
+    public static class LinksBean {
         private String twitter;
-
-        public String getWeb() {
-            return web;
-        }
-
-        public void setWeb(String web) {
-            this.web = web;
-        }
 
         public String getTwitter() {
             return twitter;

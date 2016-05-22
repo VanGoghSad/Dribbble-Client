@@ -1,8 +1,7 @@
 package com.example.lw_pc.tribblekill.core;
 
-import android.webkit.WebView;
-
 import com.example.lw_pc.tribblekill.model.Comment;
+import com.example.lw_pc.tribblekill.model.Follow;
 import com.example.lw_pc.tribblekill.model.Like;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.model.Token;
@@ -10,12 +9,10 @@ import com.example.lw_pc.tribblekill.model.Token;
 import java.util.List;
 
 import retrofit.Call;
-import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
-import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -51,4 +48,13 @@ public interface Api {
 
     @GET(DribbbleApi.LIKE_SHOT_URL)
     Call<Like> isLikeShot(@Path("id") int shotId, @Query("access_token") String token);
+
+    @GET(DribbbleApi.Personal_Shots)
+    Call<List<Shot>> getPersonalShots(@Path("id") int userId, @Query("page") int num);
+
+    @GET(DribbbleApi.Team_Shots)
+    Call<List<Shot>> getTeamShots(@Path("id") int teamId, @Query("page") int num);
+
+    @GET(DribbbleApi.Followers)
+    Call<List<Follow>> getFollowers(@Path("id") int userId);
 }

@@ -43,25 +43,19 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
         final Shot image = mShots.get(position);
 
-        if (image.isAnimated()) {
+        /*if (image.isAnimated()) {
             Picasso.with(mContext)
                     .load(R.drawable.animated)
                     .into(itemViewHolder.animated);
 
         } else {
             itemViewHolder.animated.setVisibility(View.INVISIBLE);
-        }
+        }*/
         Picasso.with(mContext)
-                .load(image.getImages().getHidpi())
+                .load(image.getImages().getNormal())
                 .into(itemViewHolder.shotImage);
 
-        itemViewHolder.iconLike.setText(R.string.icon_like);
-        itemViewHolder.iconComment.setText(R.string.icon_comment);
-        itemViewHolder.iconView.setText(R.string.icon_view);
 
-        itemViewHolder.likes.setText(mContext.getString(R.string.likes, image.getLikes_count()));
-        itemViewHolder.comments.setText(mContext.getString(R.string.comments, image.getComments_count()));
-        itemViewHolder.views.setText(mContext.getString(R.string.views, image.getViews_count()));
 
         itemViewHolder.itemView.setOnClickListener(mListener);
     }
@@ -69,24 +63,11 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView shotImage;
         private ImageView animated;
-        private MyTextView iconLike;
-        private MyTextView iconComment;
-        private MyTextView iconView;
-        private TextView likes;
-        private TextView comments;
-        private TextView views;
 
         private ItemViewHolder(View itemView) {
             super(itemView);
             shotImage = (ImageView) itemView.findViewById(R.id.shotsImage);
             animated = (ImageView) itemView.findViewById(R.id.isGif);
-            iconLike = (MyTextView) itemView.findViewById(R.id.icon_likes);
-            iconComment = (MyTextView) itemView.findViewById(R.id.icon_comments);
-            iconView = (MyTextView) itemView.findViewById(R.id.icon_views);
-            likes = (TextView) itemView.findViewById(R.id.likes_count);
-            comments = (TextView) itemView.findViewById(R.id.comment_count);
-            views = (TextView) itemView.findViewById(R.id.views_count);
-
         }
     }
 

@@ -64,6 +64,7 @@ public class Shot implements Serializable{
     private boolean animated;
     private List<String> tags;
     private User user;
+    private Team team;
 
     public int getId() {
         return id;
@@ -285,6 +286,14 @@ public class Shot implements Serializable{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
 }

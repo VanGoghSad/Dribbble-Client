@@ -24,6 +24,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //Progressbar
     //CircleImageView
+
+
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -38,5 +40,4 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
     compile 'jp.wasabeef:blurry:2.0.2'
-
 }
