@@ -31,15 +31,15 @@ import retrofit.Retrofit;
  * A simple {@link Fragment} subclass.
  */
 public class ListFragment extends Fragment implements View.OnClickListener {
-    private boolean isVisible;
-    private static final int SPAN_COUNT = 2;
-    private int page = 1;
-    private int[] lastVisibleItem;
+    protected boolean isVisible;
+    protected static final int SPAN_COUNT = 2;
+    protected int page = 1;
+    protected int[] lastVisibleItem;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private ShotsAdapter mShotsAdapter;
-    private AVLoadingIndicatorView avLoadingIndicatorView;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected RecyclerView mRecyclerView;
+    protected ShotsAdapter mShotsAdapter;
+    protected AVLoadingIndicatorView avLoadingIndicatorView;
 
     public static Fragment newInstance() {
         return new ListFragment();
@@ -62,7 +62,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         init();
     }
 
-    private void init() {
+    protected void init() {
         //mSwipeRefreshLayout.setOnRefreshListener(this);
         final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -88,7 +88,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         avLoadingIndicatorView.setVisibility(View.VISIBLE);
     }
 
-    private void loadData() {
+    protected void loadData() {
         Api api = DribbbleApi.getDribbbleApi();
         api.getShots(1).enqueue(new Callback<List<Shot>>() {
             @Override
@@ -106,7 +106,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void loadMore() {
+    protected void loadMore() {
         Api api = DribbbleApi.getDribbbleApi();
         api.getShots(++page).enqueue(new Callback<List<Shot>>() {
             @Override
@@ -137,7 +137,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void showData() {
+    protected void showData() {
         if(isVisible) {
             isVisible = false;
             loadData();

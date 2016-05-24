@@ -156,6 +156,7 @@ public class PersonalShotsFragment extends Fragment implements View.OnClickListe
         final int position = mRecyclerView.getChildAdapterPosition(v);
         if (RecyclerView.NO_POSITION != position) {
             Shot shot_1 = mShotsAdapter.getItemData(position);
+            shot_1.setUser(shot.getUser());
             DetailActivity.start(getActivity(), shot_1);
         }
     }

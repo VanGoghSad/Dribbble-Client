@@ -326,4 +326,17 @@ public class Follower implements Serializable {
             this.twitter = twitter;
         }
     }
+
+    public Shot toShot() {
+        Shot shot = new Shot();
+        User user = new User();
+        user.setId(this.getId());
+        user.setAvatar_url(this.getAvatar_url());
+        user.setBio(this.getBio());
+        user.setShots_count(this.getShots_count());
+        user.setFollowers_count(this.getFollowers_count());
+        user.setType(this.getType());
+        shot.setUser(user);
+        return shot;
+    }
 }

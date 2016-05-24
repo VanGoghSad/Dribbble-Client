@@ -26,9 +26,8 @@
         <activity
             android:name=".ui.activity.PersonalPageActivity"
             android:label="@string/title_activity_personal_page"
-            android:theme="@style/myAppTheme">
-
-        </activity>
+            android:theme="@style/myAppTheme"></activity>
+        <activity android:name=".ui.activity.ImageShower"></activity>
     </application>
 
 </manifest>

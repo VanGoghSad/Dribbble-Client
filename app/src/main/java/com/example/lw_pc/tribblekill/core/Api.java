@@ -1,5 +1,8 @@
 package com.example.lw_pc.tribblekill.core;
 
+import android.support.annotation.Nullable;
+
+import com.example.lw_pc.tribblekill.model.Attachment;
 import com.example.lw_pc.tribblekill.model.Comment;
 import com.example.lw_pc.tribblekill.model.Follow;
 import com.example.lw_pc.tribblekill.model.Like;
@@ -14,6 +17,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -57,4 +61,19 @@ public interface Api {
 
     @GET(DribbbleApi.Followers)
     Call<List<Follow>> getFollowers(@Path("id") int userId);
+
+    @GET(DribbbleApi.Check_Follow_User)
+    Call<Nullable> isFollowUser(@Path("id") int userId, @Query("access_token") String Token);
+
+    @PUT(DribbbleApi.Follow_User)
+    Call<Nullable> followUser(@Path("id") int userId, @Query("access_token") String Token);
+
+    @DELETE(DribbbleApi.Follow_User)
+    Call<Nullable> unfollowUser(@Path("id") int userId, @Query("access_token") String Token);
+
+    @GET(DribbbleApi.Following_Shot)
+    Call<List<Shot>> getFollowingShots(@Query("page") int num, @Query("access_token") String Token);
+
+    @GET(DribbbleApi.Attachments)
+    Call<List<Attachment>> getAttachments(@Path("id") int shotId);
 }

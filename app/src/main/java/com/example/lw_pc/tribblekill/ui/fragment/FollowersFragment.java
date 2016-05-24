@@ -15,6 +15,8 @@ import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Follow;
 import com.example.lw_pc.tribblekill.model.Shot;
+import com.example.lw_pc.tribblekill.ui.activity.DetailActivity;
+import com.example.lw_pc.tribblekill.ui.activity.PersonalPageActivity;
 import com.example.lw_pc.tribblekill.ui.adapter.FollowersAdapter;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -28,7 +30,7 @@ import retrofit.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FollowersFragment extends Fragment {
+public class FollowersFragment extends Fragment implements View.OnClickListener{
     private int page = 1;
 
     private RecyclerView mRecyclerView;
@@ -66,7 +68,7 @@ public class FollowersFragment extends Fragment {
     private void init() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
-        mFollowersAdapter = new FollowersAdapter(getActivity(), new ArrayList<Follow>(), shot);
+        mFollowersAdapter = new FollowersAdapter(getActivity(), new ArrayList<Follow>(), shot, this);
         mRecyclerView.setAdapter(mFollowersAdapter);
 
         Api api = DribbbleApi.getDribbbleApi();
@@ -84,4 +86,13 @@ public class FollowersFragment extends Fragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        final int position = mRecyclerView.getChildAdapterPosition(v);
+        if (RecyclerView.NO_POSITION != position) {
+            Follow follow = mFollowersAdapter.getItemData(position);
+            Shot shot = follow.getFollower().toShot();
+            PersonalPageActivity.start(getActivity(), shot);
+        }
+    }
 }

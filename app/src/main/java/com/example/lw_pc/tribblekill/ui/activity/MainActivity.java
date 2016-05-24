@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.ui.adapter.ViewPagerAdapter;
+import com.example.lw_pc.tribblekill.ui.fragment.FollowingShotsFragment;
 import com.example.lw_pc.tribblekill.ui.fragment.ListFragment;
 
 import java.util.ArrayList;
@@ -78,9 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void loadData() {
         list_fragment = new ArrayList<>();
         list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
-        list_fragment.add(new ListFragment());
+        list_fragment.add(new FollowingShotsFragment());
 
         list_title = new ArrayList<>();
         String[] tabTitle = getResources().getStringArray(R.array.tabLayout_item);

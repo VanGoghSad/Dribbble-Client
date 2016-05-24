@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -28,7 +29,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lw_pc.tribblekill.App;
 import com.example.lw_pc.tribblekill.R;
+import com.example.lw_pc.tribblekill.core.Api;
+import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.adapter.ViewPagerAdapter;
 import com.example.lw_pc.tribblekill.ui.fragment.DetailsFragment;
@@ -43,21 +47,27 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.blurry.Blurry;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class PersonalPageActivity extends AppCompatActivity {
+    private App mApp;
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ViewPagerAdapter adapter;
-    private CollapsingToolbarLayout mCllapsingToolbarLayout;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private CircleImageView mAvatar;
     private TextView mUsername;
     private TextView mBio;
+    private TextView mFollow;
     private ImageView mBackground;
     private AppBarLayout mAppBar;
 
 
     private Shot shot;
+    private String token;
     private List<Fragment> list_fragment;
     private List<String> list_title;
 
@@ -73,12 +83,15 @@ public class PersonalPageActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mCllapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mAvatar = (CircleImageView) findViewById(R.id.avatar);
         mUsername = (TextView) findViewById(R.id.username);
         mBio = (TextView) findViewById(R.id.bio);
+        mFollow = (TextView) findViewById(R.id.follow);
         mBackground = (ImageView) findViewById(R.id.background);
 
+        mApp = (App) getApplication();
+        token = mApp.sharedPreferences.getString("access_token", "");
         init();
     }
 
@@ -95,12 +108,65 @@ public class PersonalPageActivity extends AppCompatActivity {
 
         mUsername.setText(shot.getUser().getName());
         mBio.setText(Html.fromHtml(shot.getUser().getBio()));
-        mCllapsingToolbarLayout.setTitleEnabled(false);
+        mCollapsingToolbarLayout.setTitleEnabled(false);
+
+        final Api api = DribbbleApi.getDribbbleApi();
+        api.isFollowUser(shot.getUser().getId(), token).enqueue(new Callback<Nullable>() {
+            @Override
+            public void onResponse(Response<Nullable> response, Retrofit retrofit) {
+                if (response.code() == 204) {
+                    mFollow.setText("Following");
+                } else if (response.code() == 404) {
+                    mFollow.setText("Follow");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
+        mFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFollow.getText().equals("Follow")) {
+                    api.followUser(shot.getUser().getId(), token).enqueue(new Callback<Nullable>() {
+                        @Override
+                        public void onResponse(Response<Nullable> response, Retrofit retrofit) {
+                            if (response.code() == 204) {
+                                mFollow.setText("Following");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
+                } else if (mFollow.getText().equals("Following")) {
+                    api.unfollowUser(shot.getUser().getId(), token).enqueue(new Callback<Nullable>() {
+                        @Override
+                        public void onResponse(Response<Nullable> response, Retrofit retrofit) {
+                            if (response.code() == 204) {
+                                mFollow.setText("Follow");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+
         mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener(){
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (mCllapsingToolbarLayout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(mCllapsingToolbarLayout)) {
+                if (mCollapsingToolbarLayout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(mCollapsingToolbarLayout)) {
                     if(actionBar != null && actionBar.getTitle() != shot.getUser().getName()) {
                         actionBar.setTitle(shot.getUser().getName());
                     }

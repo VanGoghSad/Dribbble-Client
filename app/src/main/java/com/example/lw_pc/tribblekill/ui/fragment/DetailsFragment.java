@@ -28,8 +28,10 @@ import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Comment;
 import com.example.lw_pc.tribblekill.model.Like;
 import com.example.lw_pc.tribblekill.model.Shot;
+import com.example.lw_pc.tribblekill.ui.activity.ImageShower;
 import com.example.lw_pc.tribblekill.ui.activity.PersonalPageActivity;
 import com.example.lw_pc.tribblekill.ui.adapter.CommentsAdapter;
+import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -46,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static com.example.lw_pc.tribblekill.R.id.count_bucket;
 import static com.example.lw_pc.tribblekill.R.id.shot_title;
@@ -146,9 +149,19 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
 
 
 
-        Picasso.with(getActivity())
+        /*Picasso.with(getActivity())
                 .load(shot.getImages().getHidpi())
-                .into(mHeader);
+                .into(mHeader);*/
+        Ion.with(mHeader)
+                .load(shot.getImages().getHidpi());
+
+        mHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageShower.start(getActivity(), shot);
+            }
+        });
+
         Picasso.with(getActivity())
                 .load(shot.getUser().getAvatar_url())
                 .into(mAvatar);
@@ -237,4 +250,6 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
         }
 
     }
+
+
 }
