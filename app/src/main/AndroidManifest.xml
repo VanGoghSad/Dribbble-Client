@@ -22,7 +22,7 @@
             android:name=".ui.activity.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.LoginActivity" />
         <activity
             android:name=".ui.activity.PersonalPageActivity"
             android:label="@string/title_activity_personal_page"

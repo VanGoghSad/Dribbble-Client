@@ -1,7 +1,5 @@
 package com.example.lw_pc.tribblekill.ui.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -70,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SettingActivity.start(MainActivity.this);
+                MainActivity.this.finish();
+                LoginActivity.start(MainActivity.this);
             }
         });
         loadData();
@@ -147,4 +146,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

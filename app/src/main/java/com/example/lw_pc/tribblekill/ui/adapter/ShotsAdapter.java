@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.util.MyTextView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,20 +41,27 @@ public class ShotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+        final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
         final Shot image = mShots.get(position);
 
-        /*if (image.isAnimated()) {
-            Picasso.with(mContext)
-                    .load(R.drawable.animated)
-                    .into(itemViewHolder.animated);
 
-        } else {
-            itemViewHolder.animated.setVisibility(View.INVISIBLE);
-        }*/
         Picasso.with(mContext)
                 .load(image.getImages().getNormal())
-                .into(itemViewHolder.shotImage);
+                .into(itemViewHolder.shotImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        if (image.isAnimated()) {
+                            itemViewHolder.animated.setVisibility(View.VISIBLE);
+                        } else {
+                            itemViewHolder.animated.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
 
 

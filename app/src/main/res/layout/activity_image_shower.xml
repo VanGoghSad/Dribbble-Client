@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="#000"
-    android:gravity="center"
-    android:id="@+id/myLinear"
     tools:context="com.example.lw_pc.tribblekill.ui.activity.ImageShower">
-
+<!--
     <com.example.lw_pc.tribblekill.util.MyViewPager
         android:id="@+id/viewpager"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        >
+    </com.example.lw_pc.tribblekill.util.MyViewPager>-->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar"/>
 
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"/>
 
 
 
@@ -23,4 +32,4 @@
         android:layout_width="match_parent"
         android:layout_height="300dp" />-->
 
-</LinearLayout>
+</RelativeLayout>

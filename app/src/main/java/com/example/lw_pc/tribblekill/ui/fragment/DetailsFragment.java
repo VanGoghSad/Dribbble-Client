@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.lw_pc.tribblekill.App;
@@ -31,6 +32,7 @@ import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.ui.activity.ImageShower;
 import com.example.lw_pc.tribblekill.ui.activity.PersonalPageActivity;
 import com.example.lw_pc.tribblekill.ui.adapter.CommentsAdapter;
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -70,6 +72,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
     private TextView mDate;
     private TextView mResponse;
     private TextView mMore;
+    private ProgressBar mProgressBar;
 
     private TextView views;
     private TextView likes;
@@ -111,6 +114,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
         mDate = (TextView) v.findViewById(R.id.date);
         mResponse = (TextView) v.findViewById(R.id.response_count);
         mMore = (TextView) v.findViewById(R.id.more);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
 
         views = (TextView) v.findViewById(R.id.views_count);
         likes = (TextView) v.findViewById(R.id.like_count);
@@ -153,7 +157,13 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
                 .load(shot.getImages().getHidpi())
                 .into(mHeader);*/
         Ion.with(mHeader)
-                .load(shot.getImages().getHidpi());
+                .load(shot.getImages().getHidpi())
+                .setCallback(new FutureCallback<ImageView>() {
+                    @Override
+                    public void onCompleted(Exception e, ImageView result) {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                });
 
         mHeader.setOnClickListener(new View.OnClickListener() {
             @Override

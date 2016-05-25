@@ -15,6 +15,7 @@ public class ImageShowerAdapter extends PagerAdapter {
         mImageViews = imageViews;
     }
 
+
     @Override
     public int getCount() {
         return mImageViews.length;
