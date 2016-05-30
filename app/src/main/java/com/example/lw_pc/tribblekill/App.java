@@ -8,9 +8,14 @@ import android.content.SharedPreferences;
  */
 public class App extends Application {
     public SharedPreferences sharedPreferences;
+
+    public boolean login = false;
     @Override
     public void onCreate() {
         super.onCreate();
         sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
+        if(sharedPreferences.getString("isLogin", "").equals("true")) {
+            login = true;
+        }
     }
 }

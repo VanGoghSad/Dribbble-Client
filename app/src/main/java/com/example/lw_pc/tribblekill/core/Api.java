@@ -8,6 +8,7 @@ import com.example.lw_pc.tribblekill.model.Follow;
 import com.example.lw_pc.tribblekill.model.Like;
 import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.model.Token;
+import com.example.lw_pc.tribblekill.model.User;
 
 import java.util.List;
 
@@ -76,4 +77,7 @@ public interface Api {
 
     @GET(DribbbleApi.Attachments)
     Call<List<Attachment>> getAttachments(@Path("id") int shotId);
+
+    @GET(DribbbleApi.User)
+    Call<User> getUser(@Query("access_token") String Token);
 }

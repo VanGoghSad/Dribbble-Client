@@ -29,6 +29,7 @@ public class DribbbleApi {
     public static final String Follow_User = BASE_URL + "users/{id}/follow";
     public static final String Following_Shot = BASE_URL + "user/following/shots";
     public static final String Attachments = BASE_URL + "shots/{id}/attachments" + _ACCESS_TOKEN;
+    public static final String User = BASE_URL + "user";
 
     private Retrofit retrofit;
     private static DribbbleApi instance = new DribbbleApi();

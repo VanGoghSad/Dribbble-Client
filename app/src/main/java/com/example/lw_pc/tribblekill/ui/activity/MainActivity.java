@@ -15,17 +15,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.lw_pc.tribblekill.App;
 import com.example.lw_pc.tribblekill.R;
+import com.example.lw_pc.tribblekill.model.Info;
+import com.example.lw_pc.tribblekill.core.UserInfo;
 import com.example.lw_pc.tribblekill.ui.adapter.ViewPagerAdapter;
 import com.example.lw_pc.tribblekill.ui.fragment.FollowingShotsFragment;
 import com.example.lw_pc.tribblekill.ui.fragment.ListFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer {
+    private App mApp;
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -36,16 +44,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
 
     private ImageView mAvatar;
+    private TextView mName;
 
 
     private List<Fragment> list_fragment;
     private List<String> list_title;
+    private ListFragment listFragment;
+    private FollowingShotsFragment followingShotsFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mApp = (App) getApplication();
 
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -53,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolBar);
+
+        UserInfo.getInstance().getInfo().addObserver(this);
 
         drawer = (DrawerLayout) findViewById(R.id.container);
         toggle = new ActionBarDrawerToggle(this, drawer, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -65,20 +79,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View headerView = mNavigationView.inflateHeaderView(R.layout.nav_header_main);
         mAvatar = (ImageView) headerView.findViewById(R.id.imageView);
+        mName = (TextView) headerView.findViewById(R.id.name);
+        if (mApp.sharedPreferences.getString("isLogin", "").equals("true")) {
+            Picasso.with(this)
+                    .load(mApp.sharedPreferences.getString("avatar_url", ""))
+                    .into(mAvatar);
+            mName.setText(mApp.sharedPreferences.getString("name", ""));
+        }
         mAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.this.finish();
+                //MainActivity.this.finish();
                 LoginActivity.start(MainActivity.this);
             }
         });
         loadData();
+
+        UserInfo.getInstance().getInfo().notifyObservers();
     }
 
     private void loadData() {
         list_fragment = new ArrayList<>();
-        list_fragment.add(new ListFragment());
-        list_fragment.add(new FollowingShotsFragment());
+        listFragment = new ListFragment();
+        followingShotsFragment = new FollowingShotsFragment();
+        list_fragment.add(listFragment);
+        list_fragment.add(followingShotsFragment);
+
 
         list_title = new ArrayList<>();
         String[] tabTitle = getResources().getStringArray(R.array.tabLayout_item);
@@ -148,4 +174,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    public void update(Observable observable, Object data) {
+        if (observable instanceof Info) {
+            Picasso.with(this)
+                    .load(((Info) observable).getmImage_url())
+                    .into(mAvatar);
+            mName.setText(((Info) observable).getmName());
+
+            followingShotsFragment.onRefresh();
+        }
+    }
 }

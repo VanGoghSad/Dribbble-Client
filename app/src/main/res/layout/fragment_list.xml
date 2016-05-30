@@ -1,10 +1,14 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srl_shots_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/srl_shots_list"
     tools:context="com.example.lw_pc.tribblekill.ui.fragment.ListFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
         <com.wang.avi.AVLoadingIndicatorView
@@ -20,5 +24,6 @@
             android:id="@+id/ShotsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -30,7 +30,7 @@ import retrofit.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListFragment extends Fragment implements View.OnClickListener {
+public class ListFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     protected boolean isVisible;
     protected static final int SPAN_COUNT = 2;
     protected int page = 1;
@@ -52,7 +52,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.ShotsRecyclerView);
         avLoadingIndicatorView = (AVLoadingIndicatorView) v.findViewById(R.id.loading);
-        //mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.srl_shots_list);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.srl_shots_list);
         return v;
     }
 
@@ -63,7 +63,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     protected void init() {
-        //mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mShotsAdapter = new ShotsAdapter(getActivity(), new ArrayList<Shot>(), this);
@@ -95,7 +95,6 @@ public class ListFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Response<List<Shot>> response, Retrofit retrofit) {
                 mShotsAdapter.setShots(response.body());
                 avLoadingIndicatorView.setVisibility(View.GONE);
-                //System.out.println(response.headers().get("Link"));
             }
 
             @Override
@@ -157,15 +156,14 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-   /* *//**
+   /**
      * 页面刷新事件
-     *//*
+     */
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
         loadData();
         page = 1;
         mSwipeRefreshLayout.setRefreshing(false);
-    }*/
-
+    }
 }

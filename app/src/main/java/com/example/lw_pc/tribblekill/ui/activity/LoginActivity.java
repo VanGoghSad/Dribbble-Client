@@ -14,7 +14,10 @@ import com.example.lw_pc.tribblekill.App;
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
+import com.example.lw_pc.tribblekill.model.Info;
+import com.example.lw_pc.tribblekill.core.UserInfo;
 import com.example.lw_pc.tribblekill.model.Token;
+import com.example.lw_pc.tribblekill.model.User;
 
 import retrofit.Callback;
 import retrofit.Response;
@@ -45,18 +48,36 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 mWebView.loadUrl(url);
-                System.out.println(url);
                 if(url.contains("code")) {
                     code = url.substring(url.indexOf("=")+1, url.length());
-                    Api api = DribbbleApi.getDribbbleApi();
+                    final Api api = DribbbleApi.getDribbbleApi();
                     api.getToken(DribbbleApi.CLIENT_ID, DribbbleApi.CLIENT_SECRET, code).enqueue(new Callback<Token>() {
                         @Override
                         public void onResponse(Response<Token> response, Retrofit retrofit) {
                             app = (App) getApplication();
                             SharedPreferences.Editor editor = app.sharedPreferences.edit();
                             editor.putString("access_token", response.body().getAccess_token());
+                            editor.putString("isLogin", "true");
                             editor.apply();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                            api.getUser(response.body().getAccess_token()).enqueue(new Callback<User>() {
+                                @Override
+                                public void onResponse(Response<User> response, Retrofit retrofit) {
+                                    SharedPreferences.Editor editor = app.sharedPreferences.edit();
+                                    editor.putString("avatar_url", response.body().getAvatar_url());
+                                    editor.putString("name", response.body().getName());
+                                    editor.apply();
+                                    Info info = UserInfo.getInstance().getInfo();
+                                    info.setValue(response.body().getAvatar_url(), response.body().getName());
+                                    info.notifyObservers();
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+
+                                }
+                            });
+
                             LoginActivity.this.finish();
 
 

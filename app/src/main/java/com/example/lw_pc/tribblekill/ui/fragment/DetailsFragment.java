@@ -86,7 +86,6 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
 
     private Shot shot;
     private CommentsAdapter mCommentsAdapter;
-    private String token;
     private int position;
     private Comment comment;
 
@@ -129,7 +128,6 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
         shot = (Shot) getArguments().getSerializable(SHOT);
 
         app = (App) getActivity().getApplication();
-        token = app.sharedPreferences.getString("access_token", "");
 
         return v;
     }
@@ -213,7 +211,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener{
 
         mRcv_comments.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRcv_comments.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
-        mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>(), shot, token);
+        mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>(), shot, app.sharedPreferences.getString("access_token", ""));
         mRcv_comments.setAdapter(mCommentsAdapter);
 
 

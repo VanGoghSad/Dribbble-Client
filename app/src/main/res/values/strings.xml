@@ -2,7 +2,7 @@
     <string name="app_name">Tribblekill</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Please login!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_detail">DetailActivity</string>
@@ -34,6 +34,10 @@
     <string name="title_activity_personal_page">PersonalPageActivity</string>
     <string name="shots">"%d" \n "Shots"</string>
     <string name="followers">"%d" \n "Followers"</string>
+
+    <string name="signUp">Sign up</string>
+    <string name="signIn">Sign in</string>
+    <string name="no_follower_message">You had not followed anyone!</string>
 
 
 </resources>

@@ -38,7 +38,6 @@ public class DetailActivity extends AppCompatActivity {
     MyTextView icon_like;
 
     private boolean isLike;
-    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.container, DetailsFragment.newInstance(shot)).commit();
 
         app = (App) getApplication();
-        token = app.sharedPreferences.getString("access_token", "");
 
 
     }
@@ -78,7 +76,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final Api api = DribbbleApi.getDribbbleApi();
-        api.isLikeShot(shot.getId(), token).enqueue(new Callback<Like>() {
+        api.isLikeShot(shot.getId(), app.sharedPreferences.getString("access_token", "")).enqueue(new Callback<Like>() {
             @Override
             public void onResponse(Response<Like> response, Retrofit retrofit) {
                 isLike = response.body() != null;
@@ -103,7 +101,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isLike) {
-                    api.unlikeShot(shot.getId(), token).enqueue(new Callback<Like>() {
+                    api.unlikeShot(shot.getId(), app.sharedPreferences.getString("access_token", "")).enqueue(new Callback<Like>() {
                         @Override
                         public void onResponse(Response<Like> response, Retrofit retrofit) {
                             isLike = false;
@@ -116,7 +114,7 @@ public class DetailActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    api.likeShot(shot.getId(), token).enqueue(new Callback<Like>() {
+                    api.likeShot(shot.getId(), app.sharedPreferences.getString("access_token", "")).enqueue(new Callback<Like>() {
                         @Override
                         public void onResponse(Response<Like> response, Retrofit retrofit) {
                             if (response.body() != null) {

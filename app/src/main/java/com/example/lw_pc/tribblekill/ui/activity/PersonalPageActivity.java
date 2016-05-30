@@ -67,7 +67,6 @@ public class PersonalPageActivity extends AppCompatActivity {
 
 
     private Shot shot;
-    private String token;
     private List<Fragment> list_fragment;
     private List<String> list_title;
 
@@ -91,7 +90,6 @@ public class PersonalPageActivity extends AppCompatActivity {
         mBackground = (ImageView) findViewById(R.id.background);
 
         mApp = (App) getApplication();
-        token = mApp.sharedPreferences.getString("access_token", "");
         init();
     }
 
@@ -111,7 +109,7 @@ public class PersonalPageActivity extends AppCompatActivity {
         mCollapsingToolbarLayout.setTitleEnabled(false);
 
         final Api api = DribbbleApi.getDribbbleApi();
-        api.isFollowUser(shot.getUser().getId(), token).enqueue(new Callback<Nullable>() {
+        api.isFollowUser(shot.getUser().getId(), mApp.sharedPreferences.getString("access_token", "")).enqueue(new Callback<Nullable>() {
             @Override
             public void onResponse(Response<Nullable> response, Retrofit retrofit) {
                 if (response.code() == 204) {
@@ -131,7 +129,7 @@ public class PersonalPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mFollow.getText().equals("Follow")) {
-                    api.followUser(shot.getUser().getId(), token).enqueue(new Callback<Nullable>() {
+                    api.followUser(shot.getUser().getId(), mApp.sharedPreferences.getString("access_token", "")).enqueue(new Callback<Nullable>() {
                         @Override
                         public void onResponse(Response<Nullable> response, Retrofit retrofit) {
                             if (response.code() == 204) {
@@ -145,7 +143,7 @@ public class PersonalPageActivity extends AppCompatActivity {
                         }
                     });
                 } else if (mFollow.getText().equals("Following")) {
-                    api.unfollowUser(shot.getUser().getId(), token).enqueue(new Callback<Nullable>() {
+                    api.unfollowUser(shot.getUser().getId(), mApp.sharedPreferences.getString("access_token", "")).enqueue(new Callback<Nullable>() {
                         @Override
                         public void onResponse(Response<Nullable> response, Retrofit retrofit) {
                             if (response.code() == 204) {
