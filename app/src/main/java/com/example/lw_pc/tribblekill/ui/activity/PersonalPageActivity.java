@@ -202,11 +202,7 @@ public class PersonalPageActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-    public static void start(Context context, User user) {
-        Intent intent = new Intent(context, PersonalPageActivity.class);
-        intent.putExtra(MainActivity.USER, user);
-        context.startActivity(intent);
-    }
+
 
    /* private void applyBlur() {
         mBackgroundSource.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

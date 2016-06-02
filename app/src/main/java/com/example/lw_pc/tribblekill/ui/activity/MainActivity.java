@@ -42,8 +42,6 @@ import retrofit.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer {
-    public static final String USER = "user";
-
     private App mApp;
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
@@ -83,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initNavigation();
         loadData();
-        //UserInfo.getInstance().getInfo().notifyObservers();
     }
 
     private void initNavigation() {
@@ -128,12 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         } else {
-            mAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LoginActivity.start(MainActivity.this);
-                }
-            });
+            initDefaultUserInfo();
         }
     }
 
@@ -153,6 +145,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter = new ViewPagerAdapter(this.getSupportFragmentManager(), list_fragment, list_title);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    /**
+     * 初始化未登录时的avatar, id, 点击事件
+     */
+    private void initDefaultUserInfo(){
+        mAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.start(MainActivity.this);
+            }
+        });
+
+        mName.setText(R.string.username);
     }
 
     @Override
@@ -214,27 +220,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .into(mAvatar);
             mName.setText(((Shot) observable).getUser().getName());
 
-            followingShotsFragment.onRefresh();
             mAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     PersonalPageActivity.start(MainActivity.this, (Shot)observable);
                 }
             });
+            followingShotsFragment.onRefresh();
 
         } else if (observable instanceof Login) {
-            Picasso.with(this)
-                    .load(R.drawable.avatar)
-                    .into(mAvatar);
-            mAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LoginActivity.start(MainActivity.this);
-                }
-            });
-
-            mName.setText("username");
-            //followingShotsFragment.onRefresh();
+            initDefaultUserInfo();
         }
     }
 }

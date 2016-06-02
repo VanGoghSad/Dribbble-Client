@@ -40,6 +40,7 @@
     <string name="no_follower_message">You had not followed anyone!</string>
     <string name="pref_ringtone_silent">Silent</string>
     <string name="title_activity_settings">Setting</string>
+    <string name="username">username</string>
 
 
 </resources>

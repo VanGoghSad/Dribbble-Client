@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -43,11 +47,12 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        //mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.loadUrl(DribbbleApi.OAuth_CODE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                mWebView.loadUrl(url);
+                view.loadUrl(url);
                 if(url.contains("code")) {
                     code = url.substring(url.indexOf("=")+1, url.length());
                     final Api api = DribbbleApi.getDribbbleApi();
@@ -102,6 +107,11 @@ public class LoginActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+    private void clearCookies() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookies(null);
+    }
+
     /** 返回图标点击事件 */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,4 +123,9 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearCookies();
+    }
 }
