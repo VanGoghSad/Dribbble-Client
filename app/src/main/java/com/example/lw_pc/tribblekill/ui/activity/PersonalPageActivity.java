@@ -34,6 +34,7 @@ import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
 import com.example.lw_pc.tribblekill.model.Shot;
+import com.example.lw_pc.tribblekill.model.User;
 import com.example.lw_pc.tribblekill.ui.adapter.ViewPagerAdapter;
 import com.example.lw_pc.tribblekill.ui.fragment.DetailsFragment;
 import com.example.lw_pc.tribblekill.ui.fragment.FollowersFragment;
@@ -198,6 +199,12 @@ public class PersonalPageActivity extends AppCompatActivity {
     public static void start(Context context, Shot shot) {
         Intent intent = new Intent(context, PersonalPageActivity.class);
         intent.putExtra(DetailsFragment.SHOT, shot);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, User user) {
+        Intent intent = new Intent(context, PersonalPageActivity.class);
+        intent.putExtra(MainActivity.USER, user);
         context.startActivity(intent);
     }
 

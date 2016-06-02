@@ -1,11 +1,12 @@
 package com.example.lw_pc.tribblekill.model;
 
 import java.io.Serializable;
+import java.util.Observable;
 
 /**
  * Created by LW-PC on 2016/4/11.
  */
-public class User implements Serializable {
+public class User extends Observable implements Serializable {
 
     /**
      * id : 32512
@@ -76,6 +77,12 @@ public class User implements Serializable {
     private String teams_url;
     private String created_at;
     private String updated_at;
+
+    public void setValue(String mAvatar_url, String mName) {
+        avatar_url = mAvatar_url;
+        name = mName;
+        setChanged();
+    }
 
     public int getId() {
         return id;

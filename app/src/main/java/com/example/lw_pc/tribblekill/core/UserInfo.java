@@ -1,17 +1,21 @@
 package com.example.lw_pc.tribblekill.core;
 
-import com.example.lw_pc.tribblekill.model.Info;
+import com.example.lw_pc.tribblekill.model.Login;
+import com.example.lw_pc.tribblekill.model.Shot;
+import com.example.lw_pc.tribblekill.model.User;
 
 /**
  * User info 单例模式
  * Created by LW-PC on 2016/5/30.
  */
 public class UserInfo {
-    private Info info;
+    private Shot info;
+    private Login out;
     private volatile static UserInfo instance;
 
     private UserInfo() {
-        info = new Info();
+        info = new Shot();
+        out = new Login();
     }
 
     public static UserInfo getInstance() {
@@ -24,9 +28,15 @@ public class UserInfo {
         }
         return instance;
     }
-    public Info getInfo() {
+    public Shot getInfo() {
         return info;
     }
+
+    public Login getOut() {
+        return out;
+    }
+
+
 
 
 

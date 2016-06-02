@@ -14,8 +14,8 @@ import com.example.lw_pc.tribblekill.App;
 import com.example.lw_pc.tribblekill.R;
 import com.example.lw_pc.tribblekill.core.Api;
 import com.example.lw_pc.tribblekill.core.DribbbleApi;
-import com.example.lw_pc.tribblekill.model.Info;
 import com.example.lw_pc.tribblekill.core.UserInfo;
+import com.example.lw_pc.tribblekill.model.Shot;
 import com.example.lw_pc.tribblekill.model.Token;
 import com.example.lw_pc.tribblekill.model.User;
 
@@ -67,7 +67,8 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("avatar_url", response.body().getAvatar_url());
                                     editor.putString("name", response.body().getName());
                                     editor.apply();
-                                    Info info = UserInfo.getInstance().getInfo();
+                                    Shot info = UserInfo.getInstance().getInfo();
+                                    info.setUser(response.body());
                                     info.setValue(response.body().getAvatar_url(), response.body().getName());
                                     info.notifyObservers();
                                 }

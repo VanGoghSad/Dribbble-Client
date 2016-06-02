@@ -33,4 +33,13 @@
         </menu>
     </item>
 
+    <group>
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="Setting"
+            />
+    </group>
+
+
 </menu>
